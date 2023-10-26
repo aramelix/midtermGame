@@ -1,47 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
-using UnityEngine;
+using UnityEngine; 
+using UnityEngine.SceneManagement; 
 
 public class PlayerMove : MonoBehaviour
 {
     //variables 
-    public float Jump;  
+    public float Jump;        //jump variable
     private float moveSpeed;  //controls speed of Player 
     bool isGrounded = false;  //Whether player is on ground or not
-    Rigidbody2D rb;  
+    private Rigidbody2D rb;   //to call RigidBody in script
     public Vector2 Direction; //controls direction of movement 
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>(); //initializing the rigidbody to be used in FixedUpdate 
-        moveSpeed = 1f; //how fast Player will move 
+        moveSpeed = 5f; //how fast Player will move 
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) //When Spacebar is pressed... 
+        if (Input.GetKey(KeyCode.Space)) //When Spacebar is pressed... 
         {
-            if (isGrounded == true) //if Player is on the platform, 
+            if (isGrounded == true) //if Player is on a platform, 
             {
-                rb.AddForce(Vector2.up * Jump); //jump 
+                rb.AddForce(Vector2.up * Jump);  //Player moves up 
+                //velocity = Vector2.up * Jump; 
                 isGrounded = false; //in air 
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.D))  //When D key is pressed..
+        if (Input.GetKey(KeyCode.D))  //When D key is pressed..
         {
-            //rb.velocity = new Vector2(rb.velocity.x, transform.position.y + moveSpeed); 
-            Direction = Vector2.right * moveSpeed; 
-
-        }
+            rb.AddForce(Vector2.right * moveSpeed);  //moving to the right 
+            
+        } 
+        //else if (Input.GetKey(KeyCode.D) == false)
+        //{
+        //    Direction = Vector2.zero;
+        //}
 
         else if (Input.GetKey(KeyCode.A)) //When A key is pressed...
         {
-            //rb.velocity = new Vector2(rb.velocity.x, transform.position.y - moveSpeed); 
-            Direction = Vector2.left * moveSpeed;
+            rb.AddForce(-Vector2.right * moveSpeed); //moving to the left 
+
         }
     }
         void OnCollisionEnter2D(Collision2D collision) //adding colliders to have player land after jumping 
@@ -54,4 +58,12 @@ public class PlayerMove : MonoBehaviour
                 }
             }
         }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.tag == "Coin") //check if other object tagged "Coin" 
+        {
+            //Debug.Log("Hit");
+            SceneManager.LoadScene("2ndRound");  //next round 
+        }
+    }
 }
