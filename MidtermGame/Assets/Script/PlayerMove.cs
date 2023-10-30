@@ -7,9 +7,9 @@ public class PlayerMove : MonoBehaviour
 {
     //variables 
     public float Jump;        //jump variable
-    private float moveSpeed;  //controls speed of Player 
-    bool isGrounded = false;  //Whether player is on ground or not
-    private Rigidbody2D rb;   //to call RigidBody in script
+    private float moveSpeed;  //speed of Player 
+    bool onPlatform = false;  //Whether Player is on platform or not 
+    private Rigidbody2D rb;   //to call RigidBody in script 
     public Vector2 Direction; //controls direction of movement 
 
     // Start is called before the first frame update
@@ -24,11 +24,11 @@ public class PlayerMove : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space)) //When Spacebar is pressed... 
         {
-            if (isGrounded == true) //if Player is on a platform, 
+            if (onPlatform == true) //if Player is on a platform, 
             {
                 rb.AddForce(Vector2.up * Jump);  //Player moves up 
                 //velocity = Vector2.up * Jump; 
-                isGrounded = false; //in air 
+                onPlatform = false; //in air 
             }
         }
 
@@ -52,9 +52,9 @@ public class PlayerMove : MonoBehaviour
         {
             if (collision.gameObject.CompareTag("Platform"))  //if Player collides with Platform, 
             {
-                if (isGrounded == false)  //and if Player is in air, 
+                if (onPlatform == false)  //and if Player is in air, 
                 {
-                    isGrounded = true;  //Player will now land on ground 
+                    onPlatform = true;  //Player will now land on ground 
                 }
             }
         }
