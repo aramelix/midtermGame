@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/1stRound.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/2ndRound.unity
+    path: Assets/Scenes/3rdRound.unity
     guid: 28cdb90fbd321864d92171ed467c72c6
+  - enabled: 1
+    path: Assets/Scenes/2ndRound.unity
+    guid: cfd0f82f5e056ea43a553551b88f2fce
   m_configObjects: {}

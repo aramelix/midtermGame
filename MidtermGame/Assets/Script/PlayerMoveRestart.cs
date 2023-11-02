@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine; 
-using UnityEngine.SceneManagement; 
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerMoveRestart : MonoBehaviour
 {
     //variables 
     public float Jump;        //jump variable
@@ -30,8 +30,8 @@ public class PlayerMove : MonoBehaviour
                 rb.AddForce(Vector2.up * Jump);  //Player moves up 
 
                 onPlatform = false; //Player off Platform 
-            } 
-            
+            }
+
         }
 
         if (Input.GetKey(KeyCode.D))  //When D key is pressed..
@@ -40,7 +40,7 @@ public class PlayerMove : MonoBehaviour
             rb.AddForce(Vector2.right * moveSpeed);  //moving to the right 
             //rb.velocity = Vector2.right * moveSpeed; //(transform.position.x, transform.position.y); 
 
-        } 
+        }
         //else if (Input.GetKey(KeyCode.D) == false)
         //{
         //    Direction = Vector2.zero; 
@@ -54,24 +54,24 @@ public class PlayerMove : MonoBehaviour
 
         }
 
-        
+
     }
-        void OnCollisionEnter2D(Collision2D collision) //adding colliders to have player land after jumping 
+    void OnCollisionEnter2D(Collision2D collision) //adding colliders to have player land after jumping 
+    {
+        if (collision.gameObject.CompareTag("Platform"))  //if Player collides with Platform, 
         {
-            if (collision.gameObject.CompareTag("Platform"))  //if Player collides with Platform, 
+            if (onPlatform == false)  //and if Player is in air, 
             {
-                if (onPlatform == false)  //and if Player is in air, 
-                {
-                    onPlatform = true;  //Player will now land on ground 
-                }
+                onPlatform = true;  //Player will now land on ground 
             }
         }
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Coin") //check if other object tagged "Coin" 
         {
             //Debug.Log("Hit");
-            SceneManager.LoadScene("2ndRound");  //next round 
+            SceneManager.LoadScene("1stRound");  //next round 
         }
     }
 }
